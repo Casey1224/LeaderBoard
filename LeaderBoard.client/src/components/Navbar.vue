@@ -20,6 +20,14 @@
       <ul class="navbar-nav me-auto">
         <li>
           <router-link
+            :to="{ name: 'Games' }"
+            class="btn text-success lighten-30 selectable text-uppercase"
+          >
+            Games
+          </router-link>
+        </li>
+        <li>
+          <router-link
             :to="{ name: 'About' }"
             class="btn text-success lighten-30 selectable text-uppercase"
           >

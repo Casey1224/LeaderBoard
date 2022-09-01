@@ -38,7 +38,7 @@ export default {
         games: computed(() => AppState.games.filter(g => filterTerm.value ? g.type == filterTerm.value : true)),
     }
   },
-  components: { GameCard }
+//   components: { GameCard }
 }
 </script>
 
