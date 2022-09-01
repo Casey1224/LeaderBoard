@@ -4,8 +4,11 @@
       <div class="col-6 card  d-flex align-items-center text-center justify-content-around mb-5">
       <h1>Welcome to Trackr!</h1>
       <h4>Login in to continue</h4>
-      <button class="btn btn-outline-secondary col-6 m-2" >
+      <button class="btn btn-outline-secondary col-6 m-2" @click="login" v-if="!user.isAuthenticated">
         LOGIN
+      </button>
+      <button class="btn btn-outline-primary col-6 m-2" @click="toGames" v-else>
+      Continue to Games
       </button>
       </div>
   </div> 
@@ -13,8 +16,29 @@
 </template>
 
 <script>
+  import { computed } from "@vue/reactivity";
+import { AppState } from "../AppState";
+import { AuthService } from "../services/AuthService";
+import { useRouter } from "vue-router";
+
 export default {
-  name: 'Home'
+  name: 'Home',
+  setup() {
+    const router = useRouter()
+    return {
+      user: computed(() => AppState.user),
+      account: computed(() => AppState.account),
+      async login() {
+        AuthService.loginWithPopup();
+      },
+      async logout() {
+        AuthService.logout({ returnTo: window.location.origin });
+      },
+      toGames(){
+        router.push({name: 'Games'})
+      }
+    }
+  }
 }
 </script>
 
