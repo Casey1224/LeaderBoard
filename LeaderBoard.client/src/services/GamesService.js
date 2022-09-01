@@ -9,6 +9,11 @@ class GamesService {
         logger.log('Got Games', res.data)
         AppState.games = res.data
     }
+    async getById(gameId){
+        const res = await api.get(`api/games/${gameId}`)
+        logger.log('Got Game By Id', res.data)
+        AppState.activeGame = res.data
+    }
 }
 
 export const gamesService = new GamesService()
