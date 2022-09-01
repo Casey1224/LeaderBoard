@@ -19,9 +19,22 @@
 
 </template>
 <script>
+import { profilesService } from '../services/ProfilesService';
+import { logger } from '../utils/Logger';
+import Pop from '../utils/Pop';
+
 export default {
     setup() {
-        return {};
+        return {
+            async handleSubmit(id) {
+                try {
+                    logger.log('searching Profiles')
+                    await profilesService.getProfileById(id)
+                } catch (error) {
+                    Pop.error(error)
+                }
+            }
+        };
     },
 };
 </script>
