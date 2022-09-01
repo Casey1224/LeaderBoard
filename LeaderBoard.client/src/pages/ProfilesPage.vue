@@ -1,6 +1,6 @@
 <template>
 
-    <div class="container-fluid bg-dark text-light">
+    <!-- <div class="container-fluid bg-dark text-light">
         <div class="row">
             <div class="col-10">
                 <form @submit.prevent="searchProfile">
@@ -8,23 +8,26 @@
                     <input type="text" class="form-control" required v-model="query">
                     <button class="btn btn-info">Search</button>
 
-                </form>
-                <div v-for="p in profiles" :key="p.id">
-                    <ProfileCard :profile="p" />
-                </div>
+                </form> -->
+    <SearchForm />
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col-3" v-for="p in profiles" :key="p.id">
+                <ProfileCard :profile="p" />
             </div>
         </div>
+    </section>
+    <!-- </div>
+        </div>
     </div>
-
+ -->
 
 
 
 
 </template>
 <script>
-import { ref } from 'vue';
-import { profilesService } from '../services/ProfilesService';
-import { logger } from '../utils/Logger';
+
 import Pop from '../utils/Pop';
 import ProfileCard from '../components/ProfileCard.vue';
 import { computed } from '@vue/reactivity';
@@ -32,20 +35,20 @@ import { AppState } from '../AppState';
 
 export default {
     setup() {
-        const query = ref("");
+        // const query = ref("");
         return {
-            query,
+            // query,
             profiles: computed(() => AppState.profiles),
-            async searchProfile() {
-                try {
-                    logger.log("searching Profiles");
-                    await profilesService.getProfileBySearch(query.value);
-                    query.value = "";
-                }
-                catch (error) {
-                    Pop.error(error);
-                }
-            }
+            // async searchProfile() {
+            //     try {
+            //         logger.log("searching Profiles");
+            //         await profilesService.getProfileBySearch(query.value);
+            //         query.value = "";
+            //     }
+            //     catch (error) {
+            //         Pop.error(error);
+            //     }
+            // }
         };
     },
     components: { ProfileCard }

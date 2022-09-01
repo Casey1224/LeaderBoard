@@ -1,7 +1,7 @@
 <template>
-    <div class="container- fluid">
-        <div class="row">
-            <div class="col-3">
+    <div class="">
+        <div class="">
+            <div class="">
                 <img class="rounded-pill" :src="profile.picture" alt="" :title="profile.name">
 
 
