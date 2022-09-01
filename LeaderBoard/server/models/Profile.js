@@ -7,9 +7,11 @@ export const ProfileSchema = new Schema(
         bio: { type: String, required: true },
         coverImg: { type: String, required: true },
         playedGames: [{ type: String }],
-        picture: { type: String, required: true }
+        picture: { type: String, required: true },
+        email: { type: String, required: true },
 
 
 
-    }
+    },
+    { timestamps: true, toJSON: { virtuals: true } }
 )

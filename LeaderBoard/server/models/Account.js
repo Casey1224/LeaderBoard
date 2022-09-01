@@ -3,13 +3,20 @@ const Schema = mongoose.Schema
 
 export const AccountSchema = new Schema(
   {
-    subs: [{ type: String, unique: true }],
-    email: { type: String, lowercase: true, unique: true },
+    email: { type: String, required: true },
     name: { type: String, required: true },
-    picture: { type: String },
-    coverImg: {type: String},
-    // NOTE If you wish to add additional properties do so here
+    bio: { type: String, required: true },
+    coverImg: { type: String, required: true },
+    playedGames: [{ type: String }],
+    picture: { type: String, required: true },
+
   },
   { timestamps: true, toJSON: { virtuals: true } }
 )
 
+AccountSchema.virtual('matches', {
+  localField: 'playedGames',
+  foreignField: '_id',
+  ref: 'Match',
+
+})
