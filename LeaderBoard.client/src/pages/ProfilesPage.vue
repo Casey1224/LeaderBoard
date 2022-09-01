@@ -5,7 +5,7 @@
             <div class="col-10">
                 <form @submit.prevent="searchProfile">
                     <label for="" class="form-label">Search Profiles</label>
-                    <input type="text" class="form-control" v-model="query">
+                    <input type="text" class="form-control" required v-model="query">
                     <button class="btn btn-info">Search</button>
 
                 </form>
@@ -34,6 +34,7 @@ export default {
     setup() {
         const query = ref("");
         return {
+            query,
             profiles: computed(() => AppState.profiles),
             async searchProfile() {
                 try {
