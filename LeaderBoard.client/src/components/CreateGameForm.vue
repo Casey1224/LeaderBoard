@@ -34,29 +34,27 @@
                         </div>
                         <div class="col-6">
                             <label for="" class="form-label">Min-Players</label>
-                            <input type="num" v-model="editable.minPlayer" class="form-control" name="minPlayer"
+                            <input type="number" v-model="editable.minPlayer" class="form-control" name="minPlayer"
                                 id="minPlayer" required>
                         </div>
                         <div class="col-6">
                             <label for="" class="form-label">Max-Players</label>
-                            <input type="num" v-model="editable.maxPlayer" class="form-control" name="maxPlayer"
+                            <input type="number" v-model="editable.maxPlayer" class="form-control" name="maxPlayer"
                                 id="maxPlayer" required>
                         </div>
-                        <div class="col-6">
+                        <div class="col-12">
                             <label for="" class="form-label ">Category</label>
-                            <select v-model="editable.category" name="" id="" class="form-control">
-                                <option value="card game">Animals</option>
-                                <option value="board game">Games</option>
-                                <option value="video game">Food</option>
-                                <option value="sport">Nature</option>
-                                <option value="misc">Misc</option>
+                            <select v-model="editable.type" name="" id="" class="form-control" required>
+                                <option value="card game">Card Game</option>
+                                <option value="board game">Board Game</option>
+                                <option value="video game">Video Game</option>
+                                <option value="sport">Sport</option>
                             </select>
                         </div>
+                        <button type="submit" class="btn btn-primary m-2">Create Game</button>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -66,6 +64,9 @@
 
 <script>
 import { ref } from 'vue';
+import { gamesService } from '../services/GamesService.js';
+import { logger } from '../utils/Logger.js';
+import Pop from '../utils/Pop.js';
 
 export default {
     setup() {
@@ -74,9 +75,11 @@ export default {
             editable,
             async handleSubmit() {
                 try {
-
+                    logger.log('creating a new game', editable.value)
+                    await gamesService.createGame(editable.value)
+                    Pop.toast('Game Created!')
                 } catch (error) {
-
+                    Pop.error(error)
                 }
             }
         }

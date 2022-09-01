@@ -14,6 +14,11 @@ class GamesService {
         logger.log('Got Game By Id', res.data)
         AppState.activeGame = res.data
     }
+    async createGame(newGame){
+        const res = await api.post('api/games', newGame)
+        logger.log("create game", res.data)
+        AppState.games.unshift(res.data)
+    }
 }
 
 export const gamesService = new GamesService()
