@@ -1,5 +1,5 @@
 <template>
-    <div class="card rounded elevation-2">
+    <div class="card rounded elevation-2" @click="goTo">
         <div class="card-body">
             <img class="img-fluid rounded" :src="game.img" alt="">
         </div>
@@ -15,10 +15,16 @@
 
 
 <script>
+import { router } from '../router.js';
+
 export default {
-  setup() {
+    props: { game: {type: Object, required: true}},
+  setup(props) {
 
     return {
+        goTo(){
+            router.push({ name: 'GameDetails', params: {gameId: props.game.id}})
+        }
 
     }
   }
