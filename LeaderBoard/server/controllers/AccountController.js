@@ -10,8 +10,9 @@ export class AccountController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getUserAccount)
       .get('/:id/matches', this.getMatches)
+      .put('', this.updateAccount)
   }
-//test push
+  //test push
   async getUserAccount(req, res, next) {
     try {
       const account = await accountService.getAccount(req.userInfo)
@@ -20,10 +21,18 @@ export class AccountController extends BaseController {
       next(error)
     }
   }
-  async getMatches(req, res, next){
+  async getMatches(req, res, next) {
     try {
       const matches = await matchesService.getMatchesByAccountId(req.userInfo)
       res.send(matches)
+    } catch (error) {
+      next(error)
+    }
+  }
+  async updateAccount(req, res, next) {
+    try {
+      const account = await accountService.updateAccount(req.userInfo, req.body)
+      res.send(account)
     } catch (error) {
       next(error)
     }
