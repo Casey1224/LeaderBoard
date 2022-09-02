@@ -2,8 +2,8 @@
 
     <div>
         <router-link :to="{ name: 'ProfileDetails', params: { profileId: profile?.id } }">
-            <div class="selectable">
-                <img class="rounded-pill" :src="profile.picture" alt="" :title="profile.name">
+            <div class=" d-flex justify-content-evenly my-3 ">
+                <img class="rounded-pill selectable  elevation-2" :src="profile.picture" alt="" :title="profile.name">
             </div>
 
         </router-link>
