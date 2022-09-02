@@ -5,8 +5,8 @@ export const AccountSchema = new Schema(
   {
     email: { type: String, required: true },
     name: { type: String, required: true },
-    bio: { type: String, required: true },
-    coverImg: { type: String, required: true },
+    bio: { type: String, required: false },
+    coverImg: { type: String, required: false },
     playedGames: [{ type: String }],
     picture: { type: String, required: true },
 
