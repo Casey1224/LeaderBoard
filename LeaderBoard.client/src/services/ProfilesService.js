@@ -7,11 +7,18 @@ class ProfilesService {
     async getProfileBySearch(searchTerm) {
         const res = await api.get('/api/profiles', {
             params: {
-                query: searchTerm
+                name: searchTerm
             }
         })
         logger.log('did this work?', res.data)
         AppState.profiles = res.data.map(p => new Profile(p))
+    }
+    async getProfileById(id) {
+
+        const res = await api.get('api/profiles' + id)
+        logger.log('got profiles by id', res.data)
+        AppState.activeProfile = res.data
+
     }
 }
 
