@@ -19,6 +19,11 @@ class GamesService {
         logger.log("create game", res.data)
         AppState.games.unshift(res.data)
     }
+    async deleteGame(gameId){
+        const res = await api.delete(`api/games/${gameId}`)
+        logger.log('Canceling Game')
+        AppState.games = AppState.games.filter(g => g.id != gameId)
+    }
 }
 
 export const gamesService = new GamesService()
