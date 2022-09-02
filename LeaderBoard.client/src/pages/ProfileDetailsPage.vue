@@ -3,17 +3,17 @@
     <div class="container-fluid bg-dark text-light">
         <div class="row">
             <div class="col-12">
-                <img class="img-fluid" :src="Profile.coverImg" alt="">
+                <img class="img-fluid" :src="profile.coverImg" alt="">
             </div>
             <div class="col-4">
                 <div>
-                    <img :src="Profile.picture" alt="">
+                    <img :src="profile.picture" alt="">
                 </div>
                 <div>
-                    <p><b>{{ Profile.name }}</b></p>
+                    <p><b>{{ profile.name }}</b></p>
                 </div>
                 <div>
-                    <p>{{ Profile.bio }}</p>
+                    <p>{{ profile.bio }}</p>
                 </div>
                 <div>
                     <button class="btn btn-info">Add Friend</button>
@@ -29,9 +29,11 @@
 <script>
 import { computed } from '@vue/reactivity';
 import { onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import { AppState } from '../AppState';
 import { profilesService } from '../services/ProfilesService';
 import Pop from '../utils/Pop';
+
 
 export default {
     setup() {

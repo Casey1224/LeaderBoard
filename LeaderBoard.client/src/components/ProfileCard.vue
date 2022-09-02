@@ -1,21 +1,17 @@
 <template>
-    <div class="">
-        <div class="">
-            <div class="">
+
+    <div>
+        <router-link :to="{ name: 'ProfileDetails', params: { profileId: profile?.id } }">
+            <div class="selectable">
                 <img class="rounded-pill" :src="profile.picture" alt="" :title="profile.name">
-
-
             </div>
-        </div>
 
+        </router-link>
     </div>
-
-
-
 
 </template>
 <script>
-import { Profile } from '../models/Profile';
+
 
 export default {
     props: {

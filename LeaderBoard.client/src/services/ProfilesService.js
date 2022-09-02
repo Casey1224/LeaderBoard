@@ -12,6 +12,7 @@ class ProfilesService {
         })
         logger.log('did this work?', res.data)
         AppState.profiles = res.data.map(p => new Profile(p))
+        logger.log(AppState.profiles, 'my profiles')
     }
     async getProfileById(id) {
 
