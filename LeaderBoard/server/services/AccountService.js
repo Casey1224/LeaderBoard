@@ -56,7 +56,7 @@ class AccountService {
       _id: user.id
     })
     account = await createAccountIfNeeded(account, user)
-    await mergeSubsIfNeeded(account, user)
+    // await mergeSubsIfNeeded(account, user)
     return account
   }
 

@@ -5,7 +5,7 @@ import { api } from './AxiosService'
 class AccountService {
   async getAccount() {
     try {
-      
+      // debugger
       const res = await api.get('/account')
       AppState.account = res.data
     } catch (err) {
