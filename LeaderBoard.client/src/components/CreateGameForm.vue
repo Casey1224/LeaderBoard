@@ -30,7 +30,7 @@
                         <div class="col-6">
                             <label for="" class="form-label">Second Image</label>
                             <input type="text" v-model="editable.coverImg" class="form-control" name="coverImg"
-                                id="coverImg">
+                                id="coverImg" required>
                         </div>
                         <div class="col-6">
                             <label for="" class="form-label">Min-Players</label>
@@ -51,7 +51,7 @@
                                 <option value="sport">Sport</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary m-2">Create Game</button>
+                        <button type="submit" class="btn btn-primary m-2" data-bs-dismiss="modal">Create Game</button>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -64,6 +64,8 @@
 
 <script>
 import { ref } from 'vue';
+// import { useRoute } from 'vue-router';
+import { router } from '../router.js';
 import { gamesService } from '../services/GamesService.js';
 import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
