@@ -1,10 +1,12 @@
 <template>
     <div class="games container-fluid">
+        <h1 class="text-center">Games</h1>
+        <div class="justify-content-center d-flex">
+        <button class="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#createGameModal">
+                Create Game
+            </button>
+        </div>
         <div class="row">
-            <h1 class="text-center">Games</h1>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createGameModal">
-                    Create Game
-                </button>
             <div class="col-3" v-for="g in games" :key="g.id">
                 <GameCard :game="g" />
             </div>
@@ -38,8 +40,7 @@ export default {
             filterTerm,
             games: computed(() => AppState.games.filter(g => filterTerm.value ? g.type == filterTerm.value : true)),
         }
-    },
-    //   components: { GameCard }
+    }
 }
 </script>
 

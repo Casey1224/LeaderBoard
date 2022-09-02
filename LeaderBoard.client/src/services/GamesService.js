@@ -24,6 +24,12 @@ class GamesService {
         logger.log('Canceling Game')
         AppState.games = AppState.games.filter(g => g.id != gameId)
     }
+    async editGame(gameId){
+        //TODO 
+        const res = await api.put(`api/games/${gameId}`)
+        logger.log('editing this game', res.data)
+        
+    }
 }
 
 export const gamesService = new GamesService()
