@@ -7,7 +7,7 @@ class ProfilesService {
     async getProfileBySearch(searchTerm) {
         const res = await api.get('/api/profiles', {
             params: {
-                query: searchTerm
+                name: searchTerm
             }
         })
         logger.log('did this work?', res.data)
