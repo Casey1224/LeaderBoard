@@ -16,6 +16,9 @@
             <p>{{game.description}}</p>
             <p>{{game.rules}}</p>
         </div>
+        <div v-if="game.creatorId == account._id"> 
+                <i class="mdi mdi-delete-forever delete-button selectable" @click="deleteGame"></i>
+            </div>
     </div>
             </div>
         </div>
@@ -58,7 +61,7 @@
 <script>
 import { computed } from '@vue/reactivity';
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { AppState } from '../AppState.js';
 import { gamesService } from '../services/GamesService.js';
 import { logger } from '../utils/Logger.js';
@@ -67,6 +70,7 @@ import Pop from '../utils/Pop.js';
 export default {
   setup() {
     const query = ref('')
+    const router = useRouter()
     const route = useRoute()
     async function getById(){
         try {
@@ -82,8 +86,20 @@ export default {
     return {
         query,
         game: computed(() => AppState.activeGame),
-        account: computed(() => AppState.account)
-        
+        account: computed(() => AppState.account),
+        async deleteGame() {
+                try {
+                    const check = await Pop.confirm("Would you like to remove this game")
+                    if (!check) {
+                        return
+                    } else {
+                        await gamesService.deleteGame(route.params.gameId)
+                        router.push({ name: 'Games' })
+                    }
+                } catch (error) {
+                    Pop.error(error)
+                }
+            }
     }
   }
 }
