@@ -1,8 +1,17 @@
 <template>
     <div class="games container-fluid">
         <h1 class="text-center">Games</h1>
+        <div class="row">
+            <div class="justify-content-around d-flex">
+                <div class="col-2 btn btn-outline-dark rounded-pill" @click="filterTerm = ''">All</div>
+                <div class="col-2 btn btn-outline-dark rounded-pill" @click="filterTerm = 'card game'">Card Games</div>
+                <div class="col-2 btn btn-outline-dark rounded-pill" @click="filterTerm = 'board game'">Board Games</div>
+                <div class="col-2 btn btn-outline-dark rounded-pill" @click="filterTerm = 'video game'">Video Games</div>
+                <div class="col-2 btn btn-outline-dark rounded-pill" @click="filterTerm = 'sport'">Sport</div>
+            </div>
+        </div>
         <div class="justify-content-center d-flex">
-        <button class="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#createGameModal">
+            <button class="btn btn-primary m-3" data-bs-toggle="modal" data-bs-target="#createGameModal">
                 Create Game
             </button>
         </div>
