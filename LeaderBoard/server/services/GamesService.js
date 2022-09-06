@@ -6,8 +6,8 @@ class GamesService {
         const game = await dbContext.Games.create(newGame)
         return game
     }
-    async getAll() {
-        const games = await dbContext.Games.find().sort({ createAt: -1 })
+    async getAll(query) {
+        const games = await dbContext.Games.find({query}).sort({ createAt: -1 })
         return games
     }
     async getById(id) {
