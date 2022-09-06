@@ -164,6 +164,19 @@ export default {
                     Pop.error(error)
                 }
             },
+            async handleSubmit(){
+                try {
+                    if(!AppState.account.id){
+                        throw new Error('You must be signed in to create a match.')
+                    }
+                    //                                     vvvv put something here + create and import service
+                    const match = await matchesService.createMatch()
+                    Pop.success('Match Created')
+                } catch (error) {
+                    logger.error('[Handling Submit]', error)
+                    Pop.error(error)
+                }
+            }
         }
     }
 }
