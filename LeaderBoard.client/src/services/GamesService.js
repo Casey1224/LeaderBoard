@@ -24,10 +24,12 @@ class GamesService {
         logger.log('Canceling Game')
         AppState.games = AppState.games.filter(g => g.id != gameId)
     }
-    async editGame(gameId){
+    async editGame(gameData){
         //TODO 
-        const res = await api.put(`api/games/${gameId}`)
+        const res = await api.put(`api/games/${gameData._id}`, gameData)
         logger.log('editing this game', res.data)
+        let gameIndex = AppState.games.findIndex(g => g.id == gameData.id)
+        AppState.games.splice(gameIndex, 1, res.data)
         
     }
 }

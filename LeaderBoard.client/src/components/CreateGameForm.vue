@@ -7,7 +7,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form @submit.prevent="handleSubmit" class="row">
+                    <form @submit.prevent="handleSubmit()" class="row">
                         <div class="col-12">
                             <label for="" class="form-label">Name</label>
                             <input type="text" v-model="editable.name" class="form-control" name="name" id="name"
@@ -60,7 +60,12 @@
                             </select>
 
                         </div>
-                        <button type="submit" class="btn btn-primary m-2" data-bs-dismiss="modal">Create Game</button>
+                        <div v-if="editable.value">
+                            <button type="submit" class="btn btn-primary m-2" data-bs-dismiss="modal">Save Edit</button>
+                        </div>
+                        <div v-else>
+                            <button type="submit" class="btn btn-primary m-2" data-bs-dismiss="modal">Create Game</button>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -75,7 +80,8 @@
 // import { computed } from '@vue/reactivity';
 // import { AppState } from '../AppState.js';
 // import { useRoute } from 'vue-router';
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
+import { AppState } from '../AppState.js';
 import { gamesService } from '../services/GamesService.js';
 import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
@@ -83,14 +89,25 @@ import Pop from '../utils/Pop.js';
 export default {
     setup() {
         const editable = ref({})
+        watchEffect(() => {
+            if (!AppState.activeGame){return}
+            editable.value = {...AppState.activeGame}
+        })
         return {
             // game: computed(() => AppState.activeGame),
+            //TODO use props to auto fill form
             editable,
             async handleSubmit() {
                 try {
-                    logger.log('creating a new game', editable.value)
-                    await gamesService.createGame(editable.value)
-                    Pop.toast('Game Created!')
+                    logger.log('Handling Game Form Submit', editable.value)
+                    if(editable.value.id){
+                        await gamesService.editGame(editable.value)
+                        Pop.toast('Edit Saved!')
+                    } else {
+                        await gamesService.createGame(editable.value)
+                        Pop.toast('Game Created!')
+                    }
+                    editable.value = {}
                 } catch (error) {
                     Pop.error(error)
                 }
