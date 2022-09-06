@@ -34,6 +34,7 @@ export default {
         }
         onMounted(() => {
             getAll()
+            AppState.activeGame = {}
         })
 
         return {

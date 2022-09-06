@@ -4,7 +4,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Create Game</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
                 </div>
                 <div class="modal-body">
                     <form @submit.prevent="handleSubmit()" class="row">
@@ -12,46 +12,38 @@
                             <label for="" class="form-label">Name</label>
                             <input type="text" v-model="editable.name" class="form-control" name="name" id="name"
                                 aria-describedby="nameHelp" required   >
-                                <!-- :placeholder="game.name" -->
                         </div> 
                         <div class="col-12">
                             <label for="" class="form-label">Description</label>
                             <textarea type="text" v-model="editable.description" class="form-control" name="description"
                                 id="description" maxlength="200" required ></textarea>
-                                <!-- :placeholder="game.description" -->
                         </div>
                         <div class="col-12">
                             <label for="" class="form-label">Rules</label>
                             <textarea type="text" v-model="editable.rules" class="form-control" name="rules" id="rules"
                                 maxlength="200" required ></textarea>
-                                <!-- :placeholder="game.rules" -->
                         </div>
                         <div class="col-6">
                             <label for="" class="form-label">Image</label>
                             <input type="text" v-model="editable.img" class="form-control" name="img" id="img" required >
-                            <!-- :placeholder="game.img" -->
                         </div>
                         <div class="col-6">
                             <label for="" class="form-label">Second Image</label>
                             <input type="text" v-model="editable.coverImg" class="form-control" name="coverImg"
                                 id="coverImg" required >
-                                <!-- :placeholder="game.coverImg" -->
                         </div>
                         <div class="col-6">
                             <label for="" class="form-label">Min-Players</label>
                             <input type="number" v-model="editable.minPlayer" class="form-control" name="minPlayer"
                                 id="minPlayer" required >
-                                <!-- :placeholder="game.minPlayer" -->
                         </div>
                         <div class="col-6">
                             <label for="" class="form-label">Max-Players</label>
                             <input type="number" v-model="editable.maxPlayer" class="form-control" name="maxPlayer"
                                 id="maxPlayer" required >
-                                <!-- :placeholder="game.maxPlayer" -->
                         </div>
                         <div class="col-12">
                             <label for="" class="form-label ">Category</label>
-                            <!-- :placeholder="game.type" -->
                             <select v-model="editable.type" name="" id="" class="form-control" required >
                                 <option value="card game">Card Game</option>
                                 <option value="board game">Board Game</option>
@@ -60,7 +52,7 @@
                             </select>
 
                         </div>
-                        <div v-if="editable.value">
+                        <div v-if="editable._id">
                             <button type="submit" class="btn btn-primary m-2" data-bs-dismiss="modal">Save Edit</button>
                         </div>
                         <div v-else>
@@ -77,10 +69,8 @@
 
 
 <script>
-// import { computed } from '@vue/reactivity';
-// import { AppState } from '../AppState.js';
-// import { useRoute } from 'vue-router';
 import { ref, watchEffect } from 'vue';
+import { useRoute } from 'vue-router';
 import { AppState } from '../AppState.js';
 import { gamesService } from '../services/GamesService.js';
 import { logger } from '../utils/Logger.js';
@@ -88,19 +78,23 @@ import Pop from '../utils/Pop.js';
 
 export default {
     setup() {
+        const route = useRoute()
         const editable = ref({})
         watchEffect(() => {
             if (!AppState.activeGame){return}
             editable.value = {...AppState.activeGame}
         })
         return {
-            // game: computed(() => AppState.activeGame),
             //TODO use props to auto fill form
             editable,
+            async clearForm(){
+            editable.value = {}
+            },
             async handleSubmit() {
                 try {
+                    editable.value.gameId = route.params.gameId 
                     logger.log('Handling Game Form Submit', editable.value)
-                    if(editable.value.id){
+                    if(route.params.gameId){
                         await gamesService.editGame(editable.value)
                         Pop.toast('Edit Saved!')
                     } else {
@@ -109,6 +103,7 @@ export default {
                     }
                     editable.value = {}
                 } catch (error) {
+                    logger.error('[creating or editing car]', error)
                     Pop.error(error)
                 }
             }
