@@ -6,6 +6,7 @@ class SocketService extends SocketHandler {
     super()
     this
       .on('error', this.onError)
+
   }
 
   onError(e) {
