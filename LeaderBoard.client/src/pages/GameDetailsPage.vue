@@ -20,8 +20,8 @@
                     <i class="mdi mdi-delete-forever delete-button selectable" @click="deleteGame"></i>
                 </div>
                 <div v-if="game.creatorId == account._id">
-                    <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" 
-                    data-bs-target="#createGameModal" >Edit Account</button>
+                    <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#createGameModal">Edit Account</button>
                 </div>
             </div>
         </div>
@@ -43,13 +43,13 @@
                                 aria-describedby="nameHelp" required disabled>
                         </div>
                         <div class="col-6">
-                            <label for="" class="form-label">Player 2</label>
-                            <input type="search" v-model="query" class="form-control" name="player2" id="player2"
-                                aria-describedby="nameHelp" required>
+                            <label for="" class="form-label">Player 2({{ profile.name }})</label>
+                            <input type="search" @input.prevent="searchProfile" v-model="query" class="form-control"
+                                name="player2" id="player2" aria-describedby="nameHelp" required>
                         </div>
                         <div class="col-12">
                             <label for="" class="form-label">Winner</label>
-                            <input type="text" v-model="winner" class="form-control" name="img" id="img" required>
+                            <input type="text" v-model="profile.id" class="form-control" name="img" id="img" required>
                         </div>
                         <button type="submit" class="btn btn-primary m-2">Match Complete</button>
                     </form>
@@ -129,6 +129,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { AppState } from '../AppState.js';
 import { gamesService } from '../services/GamesService.js';
 import { matchesService } from '../services/MatchesService.js';
+import { profilesService } from '../services/ProfilesService';
 import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
 
@@ -137,6 +138,7 @@ export default {
         const query = ref('')
         const router = useRouter()
         const route = useRoute()
+
         async function getById() {
             try {
                 await gamesService.getById(route.params.gameId)
@@ -145,6 +147,7 @@ export default {
                 logger.error(error)
             }
         }
+
         onMounted(() => {
             getById()
         })
@@ -152,6 +155,7 @@ export default {
             query,
             game: computed(() => AppState.activeGame),
             account: computed(() => AppState.account),
+            profile: computed(() => AppState.profiles),
             async deleteGame() {
                 try {
                     const check = await Pop.confirm("Would you like to remove this game")
@@ -165,10 +169,21 @@ export default {
                     Pop.error(error)
                 }
             },
-            // NOTE not sure which of these are on the right track to creating a match.
-            async handleSubmit(){
+            async searchProfile() {
                 try {
-                    if(!AppState.account.id){
+                    logger.log("searching Profiles");
+                    await profilesService.getProfileBySearch(query.value);
+                    query.value = "";
+                }
+                catch (error) {
+                    Pop.error(error);
+                }
+            },
+
+            // NOTE not sure which of these are on the right track to creating a match.
+            async handleSubmit() {
+                try {
+                    if (!AppState.account.id) {
                         throw new Error('You must be signed in to create a match.')
                     }
                     //                                             v NOTE not sure what to put here.
