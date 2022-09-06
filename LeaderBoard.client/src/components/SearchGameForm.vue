@@ -1,9 +1,11 @@
 <template>
     <div class="row">
         <div class="justify-content-around d-flex">
-            <form @submit.prevent="searchGames" class="col-12">
-                <input type="text" class="form-control col-6" placeholder="Search Profiles" required v-model="query">
-                <button class="col-2 btn btn-secondary">Search</button>
+            <form @submit.prevent="searchGames" class="col-5">
+                <div class="d-flex">
+                <input type="text" class="form-control col-6" placeholder="Search Games" required v-model="query">
+                <button class="col-2 btn btn-outline-secondary">Search</button>
+                </div>
             </form>
         </div>
     </div>
