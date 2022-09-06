@@ -14,6 +14,7 @@ export class GamesController extends BaseController {
             .get('/:id/profiles', this.getProfilesByGameId)
             .get('/:id/matches', this.getMatchesByGameId)
             .use(Auth0Provider.getAuthorizedUserInfo)
+
             .put('/:id', this.editGame)
             .post('', this.create)
             .delete('/:id', this.delete)

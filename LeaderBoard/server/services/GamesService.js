@@ -6,10 +6,12 @@ class GamesService {
         const game = await dbContext.Games.create(newGame)
         return game
     }
-    async getAll(query) {
-        const games = await dbContext.Games.find({query}).sort({ createAt: -1 })
+    async getAll(query ={}) {
+        // const filter = new RegExp(query, 'ig')
+        const games = await dbContext.Games.find(query).sort({ createAt: -1 })
         return games
     }
+  
     async getById(id) {
         const game = await dbContext.Games.findById(id)
         if (!game) {
