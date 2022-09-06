@@ -32,14 +32,15 @@ class GamesService {
         AppState.games.splice(gameIndex, 1, res.data)
     }
     async getGamesBySearch(searchTerm){
+        logger.log("[Search Term]", searchTerm)
         const res = await api.get('api/games', {
             params: {
-                name: searchTerm
+                query: searchTerm
             }
         })
         logger.log('searching games', res.data)
-        AppState.games = res.data
-        logger.log(AppState.games, 'my games')
+        AppState.searchedGames = res.data
+        logger.log(AppState.games, 'found games')
     }
     }
 
