@@ -12,5 +12,6 @@ export const AppState = reactive({
 
   profiles: [],
   activeProfile: {},
+  matches: []
 
 })

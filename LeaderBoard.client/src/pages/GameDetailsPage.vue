@@ -128,6 +128,7 @@ import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { AppState } from '../AppState.js';
 import { gamesService } from '../services/GamesService.js';
+import { matchesService } from '../services/MatchesService.js';
 import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
 
@@ -169,7 +170,7 @@ export default {
                     if(!AppState.account.id){
                         throw new Error('You must be signed in to create a match.')
                     }
-                    //                                     vvvv put something here + create and import service
+                    //                                             v NOTE not sure what to put here.
                     const match = await matchesService.createMatch()
                     Pop.success('Match Created')
                 } catch (error) {
