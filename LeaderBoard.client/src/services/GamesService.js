@@ -30,8 +30,18 @@ class GamesService {
         logger.log('editing this game', res.data)
         let gameIndex = AppState.games.findIndex(g => g.id == gameData.id)
         AppState.games.splice(gameIndex, 1, res.data)
-        
     }
-}
+    async getGamesBySearch(searchTerm){
+        const res = await api.get('api/games', {
+            params: {
+                name: searchTerm
+            }
+        })
+        logger.log('searching games', res.data)
+        AppState.games = res.data
+        logger.log(AppState.games, 'my games')
+    }
+    }
+
 
 export const gamesService = new GamesService()
