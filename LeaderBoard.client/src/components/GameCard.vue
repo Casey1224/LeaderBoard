@@ -24,6 +24,7 @@ export default {
         const router = useRouter()
 
         return {
+
             goTo() {
                 router.push({ name: 'GameDetails', params: { gameId: props.game._id } })
             },

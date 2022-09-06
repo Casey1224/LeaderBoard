@@ -11,45 +11,54 @@
                         <div class="col-12">
                             <label for="" class="form-label">Name</label>
                             <input type="text" v-model="editable.name" class="form-control" name="name" id="name"
-                                aria-describedby="nameHelp" required>
-                        </div>
+                                aria-describedby="nameHelp" required   >
+                                <!-- :placeholder="game.name" -->
+                        </div> 
                         <div class="col-12">
                             <label for="" class="form-label">Description</label>
                             <textarea type="text" v-model="editable.description" class="form-control" name="description"
-                                id="description" maxlength="200" required> </textarea>
+                                id="description" maxlength="200" required ></textarea>
+                                <!-- :placeholder="game.description" -->
                         </div>
                         <div class="col-12">
                             <label for="" class="form-label">Rules</label>
                             <textarea type="text" v-model="editable.rules" class="form-control" name="rules" id="rules"
-                                maxlength="200" required></textarea>
+                                maxlength="200" required ></textarea>
+                                <!-- :placeholder="game.rules" -->
                         </div>
                         <div class="col-6">
                             <label for="" class="form-label">Image</label>
-                            <input type="text" v-model="editable.img" class="form-control" name="img" id="img" required>
+                            <input type="text" v-model="editable.img" class="form-control" name="img" id="img" required >
+                            <!-- :placeholder="game.img" -->
                         </div>
                         <div class="col-6">
                             <label for="" class="form-label">Second Image</label>
                             <input type="text" v-model="editable.coverImg" class="form-control" name="coverImg"
-                                id="coverImg" required>
+                                id="coverImg" required >
+                                <!-- :placeholder="game.coverImg" -->
                         </div>
                         <div class="col-6">
                             <label for="" class="form-label">Min-Players</label>
                             <input type="number" v-model="editable.minPlayer" class="form-control" name="minPlayer"
-                                id="minPlayer" required>
+                                id="minPlayer" required >
+                                <!-- :placeholder="game.minPlayer" -->
                         </div>
                         <div class="col-6">
                             <label for="" class="form-label">Max-Players</label>
                             <input type="number" v-model="editable.maxPlayer" class="form-control" name="maxPlayer"
-                                id="maxPlayer" required>
+                                id="maxPlayer" required >
+                                <!-- :placeholder="game.maxPlayer" -->
                         </div>
                         <div class="col-12">
                             <label for="" class="form-label ">Category</label>
-                            <select v-model="editable.type" name="" id="" class="form-control" required>
+                            <!-- :placeholder="game.type" -->
+                            <select v-model="editable.type" name="" id="" class="form-control" required >
                                 <option value="card game">Card Game</option>
                                 <option value="board game">Board Game</option>
                                 <option value="video game">Video Game</option>
                                 <option value="sport">Sport</option>
                             </select>
+
                         </div>
                         <button type="submit" class="btn btn-primary m-2" data-bs-dismiss="modal">Create Game</button>
                     </form>
@@ -63,9 +72,10 @@
 
 
 <script>
-import { ref } from 'vue';
+// import { computed } from '@vue/reactivity';
+// import { AppState } from '../AppState.js';
 // import { useRoute } from 'vue-router';
-import { router } from '../router.js';
+import { ref } from 'vue';
 import { gamesService } from '../services/GamesService.js';
 import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
@@ -74,6 +84,7 @@ export default {
     setup() {
         const editable = ref({})
         return {
+            // game: computed(() => AppState.activeGame),
             editable,
             async handleSubmit() {
                 try {

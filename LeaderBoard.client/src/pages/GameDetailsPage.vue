@@ -19,10 +19,15 @@
                 <div v-if="game.creatorId == account._id">
                     <i class="mdi mdi-delete-forever delete-button selectable" @click="deleteGame"></i>
                 </div>
+                <div v-if="game.creatorId == account._id">
+                    <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" 
+                    data-bs-target="#createGameModal" >Edit Account</button>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- ANCHOR Create Match Modal -->
     <div class="modal fade" id="createMatchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -54,6 +59,66 @@
             </div>
         </div>
     </div>
+
+    <!-- ANCHOR Edit Game Modal -->
+    <!-- <div class="modal fade" id="editGameModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create Match</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form @submit.prevent="handleSubmit" class="row">
+                        <div class="col-12">
+                            <label for="" class="form-label">Name</label>
+                            <input type="text" v-model="editable.name" class="form-control" name="name" id="name"
+                                aria-describedby="nameHelp" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="" class="form-label">Description</label>
+                            <textarea type="text" v-model="editable.description" class="form-control" name="description"
+                                id="description" maxlength="200" required> </textarea>
+                        </div>
+                        <div class="col-12">
+                            <label for="" class="form-label">Rules</label>
+                            <textarea type="text" v-model="editable.rules" class="form-control" name="rules" id="rules"
+                                maxlength="200" required></textarea>
+                        </div>
+                        <div class="col-6">
+                            <label for="" class="form-label">Image</label>
+                            <input type="text" v-model="editable.img" class="form-control" name="img" id="img" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="" class="form-label">Second Image</label>
+                            <input type="text" v-model="editable.coverImg" class="form-control" name="coverImg"
+                                id="coverImg" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="" class="form-label">Min-Players</label>
+                            <input type="number" v-model="editable.minPlayer" class="form-control" name="minPlayer"
+                                id="minPlayer" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="" class="form-label">Max-Players</label>
+                            <input type="number" v-model="editable.maxPlayer" class="form-control" name="maxPlayer"
+                                id="maxPlayer" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="" class="form-label ">Category</label>
+                            <select v-model="editable.type" name="" id="" class="form-control" required>
+                                <option value="card game">Card Game</option>
+                                <option value="board game">Board Game</option>
+                                <option value="video game">Video Game</option>
+                                <option value="sport">Sport</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary m-2">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> -->
 </template>
 
 
@@ -98,7 +163,7 @@ export default {
                 } catch (error) {
                     Pop.error(error)
                 }
-            }
+            },
         }
     }
 }
