@@ -3,11 +3,11 @@
     <div class="container-fluid bg-dark text-light">
         <div class="row">
             <div class="col-12">
-                <img class="img-fluid" :src="profile.coverImg" alt="">
+                <img class="img-fluid pic" :src="profile.coverImg" alt="">
             </div>
-            <div class="col-4">
-                <div>
-                    <img :src="profile.picture" alt="">
+            <div class="col-12">
+                <div class="d-flex justify-content-center my-5">
+                    <img class="prflpic img-fluid " :src="profile.picture" alt="">
                 </div>
                 <div>
                     <p><b>{{ profile.name }}</b></p>
@@ -56,4 +56,16 @@ export default {
 };
 </script>
 <style >
+.pic {
+    min-width: 100%;
+    max-height: 40vh;
+}
+
+.prflpic {
+    max-width: 250px;
+    max-height: 250px;
+    min-width: 250px;
+    min-height: 250px;
+    border-radius: 50%;
+}
 </style>

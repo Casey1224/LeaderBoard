@@ -5,6 +5,8 @@ export class Account {
     this.name = data.name
     this.picture = data.picture
     this.subs = data.subs
+    this.bio = data.bio
+    this.coverImg = data.coverImg
     // TODO add additional properties if needed
   }
 }
