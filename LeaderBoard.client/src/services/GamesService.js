@@ -39,8 +39,8 @@ class GamesService {
             }
         })
         logger.log('searching games', res.data)
-        AppState.searchedGames = res.data
-        logger.log(AppState.games, 'found games')
+        AppState.games = res.data
+        logger.log(AppState.games, 'found games') 
     }
     }
 
