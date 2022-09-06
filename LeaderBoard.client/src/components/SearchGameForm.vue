@@ -24,6 +24,7 @@ export default {
             async searchGames() {
                 try {
                     logger.log("searching Games");
+                    logger.log('[Query]', query.value)
                     await gamesService.getGamesBySearch(query.value);
                     query.value = "";
                 }
