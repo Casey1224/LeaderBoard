@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row m-3">
         <div class="justify-content-around d-flex">
             <form @submit.prevent="searchGames" class="col-5">
                 <div class="d-flex">
