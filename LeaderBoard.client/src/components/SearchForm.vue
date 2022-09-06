@@ -1,15 +1,17 @@
 <template>
-    <div class="container-fluid bg-dark text-light">
-        <div class="row">
+    <div class="container-fluid text-light">
+        <div class="row d-flex justify-content-center">
             <div class="col-10">
 
                 <form @submit.prevent="searchProfile">
                     <label for="" class="form-label">Search Profiles</label>
-                    <input type="text" class="form-control" required v-model="query">
-                    <button class="btn btn-info">Search</button>
+                    <input type="text" class="form-control " required v-model="query">
+                    <!-- <div class="d-flex justify-content-center justify-space-around"> -->
+                    <button class="mt-2 col-8 btn btn-info">Search</button>
+                    <!-- </div> -->
                 </form>
-
             </div>
+
         </div>
     </div>
 </template>

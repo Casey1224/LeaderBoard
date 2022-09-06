@@ -9,10 +9,10 @@
                     <button class="btn btn-info">Search</button>
 
                 </form> -->
-    <SearchForm />
+    <SearchForm class="" />
     <section class="container-fluid">
         <div class="row">
-            <div class="col-3" v-for="p in profiles" :key="p.id">
+            <div class="col-md-3" v-for="p in profiles" :key="p.id">
                 <ProfileCard :profile="p" />
             </div>
         </div>
