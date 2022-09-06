@@ -1,6 +1,6 @@
-<template>
-
-    <!-- <div class="container-fluid bg-dark text-light">
+<template >
+    <section class="background vh-100">
+        <!-- <div class="container-fluid bg-dark text-light">
         <div class="row">
             <div class="col-10">
                 <form @submit.prevent="searchProfile">
@@ -9,21 +9,21 @@
                     <button class="btn btn-info">Search</button>
 
                 </form> -->
-    <SearchForm class="" />
-    <section class="container-fluid">
-        <div class="row">
-            <div class="col-md-3" v-for="p in profiles" :key="p.id">
-                <ProfileCard :profile="p" />
+        <SearchForm class="" />
+        <section class="container-fluid">
+            <div class="row">
+                <div class="col-md-3" v-for="p in profiles" :key="p.id">
+                    <ProfileCard :profile="p" />
+                </div>
             </div>
-        </div>
-    </section>
-    <!-- </div>
+        </section>
+        <!-- </div>
         </div>
     </div>
  -->
 
 
-
+    </section>
 
 </template>
 <script>
@@ -55,4 +55,7 @@ export default {
 };
 </script>
 <style>
+.background {
+    background-color: gray;
+}
 </style>

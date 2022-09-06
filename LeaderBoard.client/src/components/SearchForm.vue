@@ -1,14 +1,17 @@
 <template>
-    <div class="container-fluid text-light">
-        <div class="row d-flex justify-content-center">
-            <div class="col-10">
+    <div class="">
+        <div class=" d-flex justify-content-center">
+            <div class=" container rounded mt-5 p-3 searchCard text-light py-3">
 
-                <form @submit.prevent="searchProfile">
-                    <label for="" class="text-dark form-label">Search Profiles</label>
-                    <input type="text" class="form-control " required v-model="query">
-                    <!-- <div class="d-flex justify-content-center justify-space-around"> -->
-                    <button class="mt-2 col-8 btn btn-info">Search</button>
-                    <!-- </div> -->
+                <form @submit.prevent="searchProfile" class="">
+                    <div class="row d-flex justify-content-around">
+                        <!-- <label for="" class="text-dark form-label">Search Profiles</label> -->
+                        <input type="text" class=" col-8 rounded" placeholder="Search Profiles" required
+                            v-model="query">
+                        <!-- <div class="d-flex justify-content-center justify-space-around"> -->
+                        <button class="mt-2 col-2 btn searchButton">Search</button>
+                        <!-- </div> -->
+                    </div>
                 </form>
             </div>
 
@@ -44,3 +47,13 @@ export default {
 
 
 </script>
+
+<style>
+.searchCard {
+    background-color: rgb(29, 36, 43);
+}
+
+.searchButton {
+    background-color: rgb(183, 249, 249);
+}
+</style>
