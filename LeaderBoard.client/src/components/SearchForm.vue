@@ -1,7 +1,7 @@
 <template>
     <div class="">
         <div class=" d-flex justify-content-center">
-            <div class=" container rounded mt-5 p-3 searchCard text-light py-3">
+            <div class=" container rounded mt-5 p-3  searchCard text-light py-3">
 
                 <form @submit.prevent="searchProfile" class="">
                     <div class="row d-flex justify-content-around">
