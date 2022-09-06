@@ -49,7 +49,7 @@
                         </div>
                         <div class="col-12">
                             <label for="" class="form-label">Winner</label>
-                            <input type="text" class="form-control" name="img" id="img" required>
+                            <input type="text" v-model="winner" class="form-control" name="img" id="img" required>
                         </div>
                         <button type="submit" class="btn btn-primary m-2">Match Complete</button>
                     </form>
@@ -165,6 +165,7 @@ export default {
                     Pop.error(error)
                 }
             },
+            // NOTE not sure which of these are on the right track to creating a match.
             async handleSubmit(){
                 try {
                     if(!AppState.account.id){
@@ -178,6 +179,23 @@ export default {
                     Pop.error(error)
                 }
             }
+            // async handleSubmit(){
+            //     try {
+            //         if(!AppState.account.id){
+            //             throw new Error('You must be signed in to create a match.')
+            //         }
+            //         const form = event.target
+            //         const newMatch = {
+            //             playerIds: form.account.id.value && form.query.value,
+            //             winnerId: form.winner.value
+            //         }
+            //         await matchesService.createMatch(newMatch)
+            //         Pop.success('Match Created')
+            //     } catch (error) {
+            //         logger.error('[Handling Submit]', error)
+            //         Pop.error(error)
+            //     }
+            // }
         }
     }
 }
