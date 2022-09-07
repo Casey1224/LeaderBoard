@@ -17,10 +17,9 @@
                 </div>
             </div>
         </section>
-        <!-- </div>
-        </div>
-    </div>
- -->
+
+
+        -->
 
 
     </section>
@@ -32,6 +31,7 @@ import Pop from '../utils/Pop';
 import ProfileCard from '../components/ProfileCard.vue';
 import { computed } from '@vue/reactivity';
 import { AppState } from '../AppState';
+import MatchCard from '../components/MatchCard.vue';
 
 export default {
     setup() {
@@ -48,10 +48,10 @@ export default {
             //     catch (error) {
             //         Pop.error(error);
             //     }
-            // }
+
         };
     },
-    components: { ProfileCard }
+    components: { ProfileCard, MatchCard }
 };
 </script>
 <style>
