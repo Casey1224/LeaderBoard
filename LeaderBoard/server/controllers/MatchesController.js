@@ -7,10 +7,10 @@ export class MatchesController extends BaseController {
     constructor() {
         super('api/matches')
         this.router
-            .use(Auth0Provider.getAuthorizedUserInfo)
-            .get('', this.getMyMatches)
-            .post('', this.createMatch)
-            .get('/:profileId', this.getProfileMatches)
+        .get('', this.getMyMatches)
+        .get('/:profileId', this.getProfileMatches)
+        .use(Auth0Provider.getAuthorizedUserInfo)
+        .post('', this.createMatch)
 
     }
     async createMatch(req, res, next) {

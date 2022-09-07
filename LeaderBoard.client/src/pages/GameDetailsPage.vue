@@ -29,7 +29,7 @@
 
     <!-- ANCHOR Create Match Modal -->
     <div class="modal fade" id="createMatchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Create Match</h5>
@@ -37,11 +37,19 @@
                 </div>
                 <div class="modal-body">
                     <SearchForm />
-                        <div class="row">
-                            <div class="col-md-6" v-for="p in profiles" :key="p.id">
-                                <MatchProfileCard :profile="p" />
-                            </div>
+                    <div class="row">
+                        <div class="col-md-6" @click="selectPlayers(p)" v-for="p in profiles" :key="p.id">
+                            <MatchProfileCard :profile="p" />
                         </div>
+                        <div v-for=" p in selectedPlayers" :key="p.id">
+                            <img class="blah rounded-pill  elevation-2 img-fluid" :src="p.picture"
+                                alt="" :title="p.name">
+                                
+                        </div>
+                        <button class="btn btn-outline-secondary" @click="startMatch">
+                            Start Match
+                        </button>
+                    </div>
                 </div>
                 <div class="modal-footer">
                 </div>
@@ -69,7 +77,8 @@ import MatchProfileCard from '../components/MatchProfileCard.vue';
 
 export default {
     setup() {
-        const newMatch = ref({});
+        const newMatch = ref({ playerIds: [] }); //backend sending all the player ids to the server POST
+        const selectedPlayers = ref([]); //frontend sending the players to the "match page" 
         const query = ref("");
         // goi and get opponent, and set this ref to 
         const opponent = ref([]);
@@ -91,9 +100,36 @@ export default {
             query,
             opponent,
             newMatch,
+            selectedPlayers,
             game: computed(() => AppState.activeGame),
             account: computed(() => AppState.account),
             profiles: computed(() => AppState.profiles),
+            //SENDS NEW MATCH.VALUE TO THE BACKEND
+            async startMatch(){
+                try {
+                    // let newMatch = newMatch.value.playerIds
+                    await matchesService.createMatch(newMatch.value.playerIds, route.params.id)
+                    logger.log("match created")
+                } catch (error) {
+                    Pop.error('Starting Match',error)
+                }
+            },
+            async selectPlayers(profile) {
+                try {
+                if(newMatch.value.playerIds.includes(profile.id)){
+                return 
+               }
+                newMatch.value.playerIds.push(profile.id)
+                selectedPlayers.value.push(profile)
+                logger.log("[NEW MATCH]", newMatch.value)
+                logger.log("[SELECTED PLAYERS]", selectedPlayers.value)
+                } catch (error) {
+                    Pop.error(error)
+                }
+              
+                //TODO Pop confirm to add player
+                //TODO Second page of modal that as the selected player as well as account 
+            },
             async deleteGame() {
                 try {
                     const check = await Pop.confirm("Would you like to remove this game");
@@ -122,7 +158,6 @@ export default {
                     Pop.error(error);
                 }
             },
-            // NOTE not sure which of these are on the right track to creating a match.
             async handleSubmit() {
                 try {
                     if (!AppState.account.id) {
