@@ -5,7 +5,7 @@ class MatchesService{
     async createMatch(newMatch){
         const res = await api.post('api/matches', newMatch)
         AppState.matches.unshift(res.data)
-        return res.data
+        // return res.data
     }
 }
 

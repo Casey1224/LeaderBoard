@@ -36,20 +36,26 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form @submit.prevent="handleSubmit" class="row">
-                        <div class="col-6">
-                            <label for="" class="form-label">Player 1 ({{ account.name }})</label>
-                            <input type="text" v-model="account.id" class="form-control" name="player1" id="player1"
-                                aria-describedby="nameHelp" required disabled>
-                        </div>
-                        <div class="col-6">
-                            <label for="" class="form-label">Player 2({{ profile.name }})</label>
-                            <input type="search" @input.prevent="searchProfile" v-model="query" class="form-control"
-                                name="player2" id="player2" aria-describedby="nameHelp" required>
-                        </div>
-                        <div class="col-12">
+                    <div class="col-6">
+                        <label for="" class="form-label">Player 2{{ profile.name }}</label>
+                        <form   @submit.prevent="searchProfile">
+                        <input type="search" v-model="query"
+                        class="form-control" name="player2" id="player2" aria-describedby="nameHelp"
+                        required>
+                        <button class="btn btn-secondary" @click="searchProfile">find player</button>
+                        </form>
+                        <!-- this button brings down all the games -->
+                    </div>
+                    <!-- TODO Show this form after I have selected my opponent (player) -->
+                    <form @submit.prevent="handleSubmit" class="row" v-if="opponent.length">
+                    <div class="col-6">
+                        <label for="" class="form-label">Player 1 ({{ account.name }})</label>
+                        <input type="text" v-model="account.id" class="form-control" name="player1" id="player1"
+                        aria-describedby="nameHelp" required disabled>
+                    </div>
+                    <div class="col-12">
                             <label for="" class="form-label">Winner</label>
-                            <input type="text" v-model="profile.id" class="form-control" name="img" id="img" required>
+                            <input type="text" v-model="profile.id" class="form-control" name="img" id="img" >
                         </div>
                         <button type="submit" class="btn btn-primary m-2">Match Complete</button>
                     </form>
@@ -60,65 +66,7 @@
         </div>
     </div>
 
-    <!-- ANCHOR Edit Game Modal -->
-    <!-- <div class="modal fade" id="editGameModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Create Match</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form @submit.prevent="handleSubmit" class="row">
-                        <div class="col-12">
-                            <label for="" class="form-label">Name</label>
-                            <input type="text" v-model="editable.name" class="form-control" name="name" id="name"
-                                aria-describedby="nameHelp" required>
-                        </div>
-                        <div class="col-12">
-                            <label for="" class="form-label">Description</label>
-                            <textarea type="text" v-model="editable.description" class="form-control" name="description"
-                                id="description" maxlength="200" required> </textarea>
-                        </div>
-                        <div class="col-12">
-                            <label for="" class="form-label">Rules</label>
-                            <textarea type="text" v-model="editable.rules" class="form-control" name="rules" id="rules"
-                                maxlength="200" required></textarea>
-                        </div>
-                        <div class="col-6">
-                            <label for="" class="form-label">Image</label>
-                            <input type="text" v-model="editable.img" class="form-control" name="img" id="img" required>
-                        </div>
-                        <div class="col-6">
-                            <label for="" class="form-label">Second Image</label>
-                            <input type="text" v-model="editable.coverImg" class="form-control" name="coverImg"
-                                id="coverImg" required>
-                        </div>
-                        <div class="col-6">
-                            <label for="" class="form-label">Min-Players</label>
-                            <input type="number" v-model="editable.minPlayer" class="form-control" name="minPlayer"
-                                id="minPlayer" required>
-                        </div>
-                        <div class="col-6">
-                            <label for="" class="form-label">Max-Players</label>
-                            <input type="number" v-model="editable.maxPlayer" class="form-control" name="maxPlayer"
-                                id="maxPlayer" required>
-                        </div>
-                        <div class="col-12">
-                            <label for="" class="form-label ">Category</label>
-                            <select v-model="editable.type" name="" id="" class="form-control" required>
-                                <option value="card game">Card Game</option>
-                                <option value="board game">Board Game</option>
-                                <option value="video game">Video Game</option>
-                                <option value="sport">Sport</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary m-2">Save Changes</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div> -->
+    
 </template>
 
 
@@ -135,7 +83,10 @@ import Pop from '../utils/Pop.js';
 
 export default {
     setup() {
+        const newMatch = ref({})
         const query = ref('')
+        // goi and get opponent, and set this ref to 
+        const opponent = ref([])
         const router = useRouter()
         const route = useRoute()
 
@@ -153,6 +104,8 @@ export default {
         })
         return {
             query,
+            opponent,
+            newMatch,
             game: computed(() => AppState.activeGame),
             account: computed(() => AppState.account),
             profile: computed(() => AppState.profiles),
@@ -172,7 +125,10 @@ export default {
             async searchProfile() {
                 try {
                     logger.log("searching Profiles");
-                    await profilesService.getProfileBySearch(query.value);
+                    const player = await profilesService.getProfileBySearch(query.value);
+                    debugger
+                    // REVIEW opponent.push is not a function??
+                    // opponent =opponent.push(player)
                     query.value = "";
                 }
                 catch (error) {
@@ -187,8 +143,13 @@ export default {
                         throw new Error('You must be signed in to create a match.')
                     }
                     //                                             v NOTE not sure what to put here.
-                    const match = await matchesService.createMatch()
+                    let newMatch = {
+                        gameId: AppState.activeGame.id
+                    }
+                    debugger
+                    const match = await matchesService.createMatch(newMatch)
                     Pop.success('Match Created')
+                    return match
                 } catch (error) {
                     logger.error('[Handling Submit]', error)
                     Pop.error(error)
