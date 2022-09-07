@@ -29,36 +29,19 @@
 
     <!-- ANCHOR Create Match Modal -->
     <div class="modal fade" id="createMatchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Create Match</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="col-6">
-                        <label for="" class="form-label">Player 2{{ profile.name }}</label>
-                        <form   @submit.prevent="searchProfile">
-                        <input type="search" v-model="query"
-                        class="form-control" name="player2" id="player2" aria-describedby="nameHelp"
-                        required>
-                        <button class="btn btn-secondary" @click="searchProfile">find player</button>
-                        </form>
-                        <!-- this button brings down all the games -->
-                    </div>
-                    <!-- TODO Show this form after I have selected my opponent (player) -->
-                    <form @submit.prevent="handleSubmit" class="row" v-if="opponent.length">
-                    <div class="col-6">
-                        <label for="" class="form-label">Player 1 ({{ account.name }})</label>
-                        <input type="text" v-model="account.id" class="form-control" name="player1" id="player1"
-                        aria-describedby="nameHelp" required disabled>
-                    </div>
-                    <div class="col-12">
-                            <label for="" class="form-label">Winner</label>
-                            <input type="text" v-model="profile.id" class="form-control" name="img" id="img" >
+                    <SearchForm />
+                        <div class="row">
+                            <div class="col-md-6" v-for="p in profiles" :key="p.id">
+                                <MatchProfileCard :profile="p" />
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-primary m-2">Match Complete</button>
-                    </form>
                 </div>
                 <div class="modal-footer">
                 </div>
@@ -66,7 +49,7 @@
         </div>
     </div>
 
-    
+
 </template>
 
 
@@ -80,53 +63,57 @@ import { matchesService } from '../services/MatchesService.js';
 import { profilesService } from '../services/ProfilesService';
 import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
+import SearchForm from '../components/SearchForm.vue';
+import MatchProfileCard from '../components/MatchProfileCard.vue';
+
 
 export default {
     setup() {
-        const newMatch = ref({})
-        const query = ref('')
+        const newMatch = ref({});
+        const query = ref("");
         // goi and get opponent, and set this ref to 
-        const opponent = ref([])
-        const router = useRouter()
-        const route = useRoute()
-
+        const opponent = ref([]);
+        const router = useRouter();
+        const route = useRoute();
         async function getById() {
             try {
-                await gamesService.getById(route.params.gameId)
-            } catch (error) {
-                Pop.error('Getting Game By Id', error)
-                logger.error(error)
+                await gamesService.getById(route.params.gameId);
+            }
+            catch (error) {
+                Pop.error("Getting Game By Id", error);
+                logger.error(error);
             }
         }
-
         onMounted(() => {
-            getById()
-        })
+            getById();
+        });
         return {
             query,
             opponent,
             newMatch,
             game: computed(() => AppState.activeGame),
             account: computed(() => AppState.account),
-            profile: computed(() => AppState.profiles),
+            profiles: computed(() => AppState.profiles),
             async deleteGame() {
                 try {
-                    const check = await Pop.confirm("Would you like to remove this game")
+                    const check = await Pop.confirm("Would you like to remove this game");
                     if (!check) {
-                        return
-                    } else {
-                        await gamesService.deleteGame(route.params.gameId)
-                        router.push({ name: 'Games' })
+                        return;
                     }
-                } catch (error) {
-                    Pop.error(error)
+                    else {
+                        await gamesService.deleteGame(route.params.gameId);
+                        router.push({ name: "Games" });
+                    }
+                }
+                catch (error) {
+                    Pop.error(error);
                 }
             },
             async searchProfile() {
                 try {
                     logger.log("searching Profiles");
                     const player = await profilesService.getProfileBySearch(query.value);
-                    debugger
+                    debugger;
                     // REVIEW opponent.push is not a function??
                     // opponent =opponent.push(player)
                     query.value = "";
@@ -135,45 +122,29 @@ export default {
                     Pop.error(error);
                 }
             },
-
             // NOTE not sure which of these are on the right track to creating a match.
             async handleSubmit() {
                 try {
                     if (!AppState.account.id) {
-                        throw new Error('You must be signed in to create a match.')
+                        throw new Error("You must be signed in to create a match.");
                     }
                     //                                             v NOTE not sure what to put here.
                     let newMatch = {
                         gameId: AppState.activeGame.id
-                    }
-                    debugger
-                    const match = await matchesService.createMatch(newMatch)
-                    Pop.success('Match Created')
-                    return match
-                } catch (error) {
-                    logger.error('[Handling Submit]', error)
-                    Pop.error(error)
+                    };
+                    debugger;
+                    const match = await matchesService.createMatch(newMatch);
+                    Pop.success("Match Created");
+                    return match;
+                }
+                catch (error) {
+                    logger.error("[Handling Submit]", error);
+                    Pop.error(error);
                 }
             }
-            // async handleSubmit(){
-            //     try {
-            //         if(!AppState.account.id){
-            //             throw new Error('You must be signed in to create a match.')
-            //         }
-            //         const form = event.target
-            //         const newMatch = {
-            //             playerIds: form.account.id.value && form.query.value,
-            //             winnerId: form.winner.value
-            //         }
-            //         await matchesService.createMatch(newMatch)
-            //         Pop.success('Match Created')
-            //     } catch (error) {
-            //         logger.error('[Handling Submit]', error)
-            //         Pop.error(error)
-            //     }
-            // }
-        }
-    }
+        };
+    },
+    components: { SearchForm, MatchProfileCard }
 }
 </script>
 
