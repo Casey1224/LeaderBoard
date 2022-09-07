@@ -34,9 +34,8 @@ export default {
                 selectedPlayers.value.push(profileId)
                 logger.log("[NEW MATCH]", newMatch.value)
                 logger.log("[SELECTED PLAYERS]", selectedPlayers.value)
-
-
-
+                //TODO Pop confirm to add player
+                //TODO Second page of modal that as the selected player as well as account 
             }
         }
     }
