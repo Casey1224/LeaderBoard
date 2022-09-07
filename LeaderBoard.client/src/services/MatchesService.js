@@ -16,7 +16,6 @@ class MatchesService {
     }
 
     async getProfileMatches(profileId) {
-        // debugger
         const res = await api.get(`api/matches/${profileId}`)
         logger.log('profile matches', res.data)
         AppState.profileMatches = res.data

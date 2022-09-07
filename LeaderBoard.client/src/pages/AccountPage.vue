@@ -7,6 +7,9 @@
   <div class="col-md-4">
     <accountForm />
   </div>
+  <div>
+
+  </div>
 </template>
 
 <script>
