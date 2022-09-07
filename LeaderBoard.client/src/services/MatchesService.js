@@ -1,3 +1,4 @@
+import { AuthPlugin } from "@bcwdev/auth0provider-client"
 import { AppState } from "../AppState"
 import { logger } from "../utils/Logger"
 import { api } from "./AxiosService"
@@ -9,10 +10,16 @@ class MatchesService {
         // return res.data
     }
 
-    async getMatches() {
+    async getMyMatches() {
         const res = await api.get('api/matches')
         logger.log(res.data)
     }
 
+    async getProfileMatches(profileId) {
+        // debugger
+        const res = await api.get(`api/matches/${profileId}`)
+        logger.log('profile matches', res.data)
+        AppState.profileMatches = res.data
+    }
 }
 export const matchesService = new MatchesService()

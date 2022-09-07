@@ -2,7 +2,15 @@ import { dbContext } from "../db/DbContext"
 
 
 class MatchesService {
+    async getMyMatches(userId) {
+        const matches = await dbContext.Matches.find({ playerIds: userId }).populate('players game', 'name picture')
+        return matches
+    }
 
+    async getProfileMatches(profileId) {
+        const matches = await dbContext.Matches.find({ playerIds: profileId }).populate('players game')
+        return matches
+    }
 
     async createMatch(newMatch) {
 

@@ -31,7 +31,7 @@
 </template>
 <script>
 import { computed } from '@vue/reactivity';
-import { onMounted } from 'vue';
+import { onMounted, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 import { AppState } from '../AppState';
 import { matchesService } from '../services/MatchesService';
@@ -51,20 +51,30 @@ export default {
                 Pop.error(error)
             }
         }
-        async function getMatches() {
-            try {
-                await matchesService.getMatches()
-            } catch (error) {
-                logger.log(error)
-                Pop.error(error)
+        async function getProfileMatches() {
+            if (AppState.account.id) {
+                try {
+                    await matchesService.getProfileMatches(route.params.profileId)
+                } catch (error) {
+                    logger.log(error)
+                    Pop.error(error)
+                }
             }
         }
+
+        watchEffect(() => {
+            AppState.account.id
+            getProfileMatches()
+        })
+
         onMounted(() => {
             getProfileById();
-            getMatches()
         })
         return {
+            route,
             profile: computed(() => AppState.activeProfile),
+            account: computed(() => AppState.account),
+            matches: computed(() => AppState.profileMatches)
         };
     },
 };
