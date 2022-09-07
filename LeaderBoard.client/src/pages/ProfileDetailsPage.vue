@@ -22,6 +22,9 @@
             </div>
         </div>
     </div>
+    <div v-for="m in matches" :key="m">
+        <MatchCard :matches="m" />
+    </div>
 
 
 
@@ -31,23 +34,34 @@ import { computed } from '@vue/reactivity';
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { AppState } from '../AppState';
+import { matchesService } from '../services/MatchesService';
 import { profilesService } from '../services/ProfilesService';
+import { logger } from '../utils/Logger';
 import Pop from '../utils/Pop';
 
 
 export default {
     setup() {
+        // get matches...make get request api/matches
         const route = useRoute();
         async function getProfileById() {
             try {
                 await profilesService.getProfileById(route.params.profileId)
             } catch (error) {
                 Pop.error(error)
-
+            }
+        }
+        async function getMatches() {
+            try {
+                await matchesService.getMatches()
+            } catch (error) {
+                logger.log(error)
+                Pop.error(error)
             }
         }
         onMounted(() => {
             getProfileById();
+            getMatches()
         })
         return {
             profile: computed(() => AppState.activeProfile),

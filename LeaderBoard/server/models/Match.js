@@ -3,7 +3,7 @@ const ObjectId = Schema.Types.ObjectId
 
 export const MatchSchema = new Schema({
     gameId: { type: ObjectId, required: true, ref: 'Game' },
-    playerIds: [{ type: ObjectId, required: true, ref: 'Account' }],
+    playerIds: [{ type: ObjectId, required: true, ref: 'Profile' }],
     winnerId: { type: ObjectId, required: false, ref: 'Account' },
     // groupId: { type: ObjectId, required: false, ref: 'Group' },
 },
@@ -12,7 +12,7 @@ export const MatchSchema = new Schema({
 MatchSchema.virtual('players', {
     localField: 'playerIds',
     foreignField: '_id',
-    ref: 'Account'
+    ref: 'Profile'
 })
 
 MatchSchema.virtual('game', {
