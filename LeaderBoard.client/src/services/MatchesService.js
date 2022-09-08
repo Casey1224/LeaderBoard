@@ -23,8 +23,8 @@ class MatchesService {
         AppState.profileMatches = res.data
     }
 
-    async editMatch(matchData, matchId){
-        const res = await api.put(`api/matches/${matchId}`, matchData)
+    async editMatch(data){
+        const res = await api.put(`api/matches/${data.matchId}`, data.winnerId)
         logger.log('edit match', res.data)
         AppState.activeMatch = res.data
     }
