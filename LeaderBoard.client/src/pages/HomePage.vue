@@ -3,7 +3,14 @@
   <div class="row middle  align-items-center justify-content-center">
       <div class="col-6 card  d-flex align-items-center text-center justify-content-around mb-5">
       <h1>Welcome to Trackr!</h1>
-      <h4>Login in to continue</h4>
+
+      <div v-if="user.isAuthenticated">
+        <h4>Welcome {{user.name}}</h4>
+      </div>
+      <div v-else>
+        <h4>Login in to continue</h4>
+      </div>
+
       <button class="btn btn-outline-secondary col-6 m-2" @click="login" v-if="!user.isAuthenticated">
         LOGIN
       </button>
