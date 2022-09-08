@@ -1,7 +1,6 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      MATCH DETAILS PAGE 
     </div>
   </div>
 </template>
@@ -9,19 +8,20 @@
 
 <script>
 import { onMounted } from 'vue';
+import { AppState } from '../AppState.js';
 import { logger } from '../utils/Logger.js';
+
 
 export default {
   setup() {
-    function refresh(){
-      logger.log('[refreshing page]')
-      location.reload()
-    }
     onMounted(() => {
-      // refresh();
+      test()
     })
     return {
-
+     match: computed (() => AppState.activeGame),
+      test() {
+        logger.log("[macth]")
+      }
     }
   }
 }
@@ -29,4 +29,5 @@ export default {
 
 
 <style lang="scss" scoped>
+
 </style>
