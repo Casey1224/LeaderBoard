@@ -21,6 +21,7 @@
 <script>
 import { onMounted } from 'vue';
 import { matchesService } from '../services/MatchesService';
+import { logger } from '../utils/Logger';
 import Pop from '../utils/Pop';
 
 export default {
@@ -29,7 +30,9 @@ export default {
         async function getMyMatches() {
             try {
                 let match = await matchesService.getMyMatches()
+                logger.log(matches.playerIds)
                 return match
+
             } catch (error) {
                 Pop.error(error)
             }
