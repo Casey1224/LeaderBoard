@@ -5,7 +5,7 @@
             <div class="col-8 ">
                 <div class="card  elevation-2 mx-2">
                     <h3>{{matches.game.name}}</h3>
-                    <img class="" :src="matches.game.coverImg" alt="">
+                    <img class="rounded" :src="matches.game.coverImg" alt="">
                     <div v-for="m in matches" :key="m.id">
                         {{matches.players.name}}
                     </div>
