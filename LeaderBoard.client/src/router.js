@@ -38,6 +38,11 @@ const routes = [
     component: loadPage('ProfilesPage')
   },
   {
+    path: '/match/:matchId',
+    name: 'MatchDetails',
+    component: loadPage('MatchDetailsPage')
+  },
+  {
     path: '/profiles/:profileId',
     name: 'ProfileDetails',
     component: loadPage('ProfileDetailsPage'),
