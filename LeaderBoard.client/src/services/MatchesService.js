@@ -7,6 +7,7 @@ class MatchesService {
     async createMatch(match) {
         const res = await api.post('api/matches', match)
         AppState.matches.unshift(res.data)
+        logger.log("[new match created]", res.data)
         // return res.data
     }
 

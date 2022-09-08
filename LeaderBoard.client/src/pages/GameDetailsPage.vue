@@ -80,8 +80,6 @@ export default {
         const newMatch = ref({ playerIds: [] }); //backend sending all the player ids to the server POST
         const selectedPlayers = ref([]); //frontend sending the players to the "match page" 
         const query = ref("");
-        // goi and get opponent, and set this ref to 
-        const opponent = ref([]);
         const router = useRouter();
         const route = useRoute();
         async function getById() {
@@ -98,31 +96,23 @@ export default {
         });
         return {
             query,
-            opponent,
             newMatch,
             selectedPlayers,
             game: computed(() => AppState.activeGame),
             account: computed(() => AppState.account),
             profiles: computed(() => AppState.profiles),
-            //SENDS NEW MATCH.VALUE TO THE BACKEND
-            // async startMatch(){
-            //     try {
-            //         // let newMatch = newMatch.value.playerIds
-            //         await matchesService.createMatch(newMatch.value.playerIds, route.params.id)
-            //         logger.log("match created")
-            //     } catch (error) {
-            //         Pop.error('Starting Match',error)
-            //     }
-            // },
+
             async startMatch(){
                 try {
-                    // let newMatch = newMatch.value.playerIds
+                    newMatch.value.playerIds.push(this.account.id)
+                    logger.log('[new match with account id]', newMatch.value )
                     let match = {
                         gameId: route.params.gameId,
                         playerIds: newMatch.value.playerIds
                     }
                     await matchesService.createMatch(match)
                     logger.log("match created")
+                    // router.push({ name: MatchDetails })
                 } catch (error) {
                     Pop.error('Starting Match',error)
                 }
@@ -163,8 +153,6 @@ export default {
                     logger.log("searching Profiles");
                     const player = await profilesService.getProfileBySearch(query.value);
                     debugger;
-                    // REVIEW opponent.push is not a function??
-                    // opponent =opponent.push(player)
                     query.value = "";
                 }
                 catch (error) {
