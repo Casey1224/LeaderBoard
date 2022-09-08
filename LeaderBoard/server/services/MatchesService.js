@@ -47,8 +47,11 @@ class MatchesService {
 
     async editMatch(id, matchData) {
         const match = await this.getById(id)
+        // @ts-ignore
         match.playerIds = matchData.playerIds || match.playerIds
+        // @ts-ignore
         match.winnerId = matchData.winnerId || match.winnerId
+        // @ts-ignore
         await match.save()
         return match
     }
