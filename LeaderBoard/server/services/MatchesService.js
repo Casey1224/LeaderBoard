@@ -7,6 +7,13 @@ class MatchesService {
         return matches
     }
 
+    async getById(id){
+        const match = await dbContext.Matches.findById(id)
+        .populate('players', 'name picture')
+        .populate('game', 'name img')
+        return match
+    }
+
     async getProfileMatches(profileId) {
         const matches = await dbContext.Matches.find({ playerIds: profileId }).populate('players game')
         return matches
@@ -32,6 +39,14 @@ class MatchesService {
     async getMatchesByAccountId(accountId) {
         let matches = await dbContext.Matches.find({ accountId: accountId }).populate('game')
         return matches
+    }
+
+    async editMatch(id, matchData){
+        const match = await this.getById(id)
+        match.playerIds = matchData.playerIds || match.playerIds
+        match.winnerId = matchData.winnerId || match.winnerId
+        await match.save()
+        return match
     }
 }
 

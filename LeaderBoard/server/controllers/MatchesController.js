@@ -8,9 +8,11 @@ export class MatchesController extends BaseController {
         super('api/matches')
         this.router
         .get('', this.getMyMatches)
+        .get('/:id', this.getById)
         .get('/:profileId', this.getProfileMatches)
         .use(Auth0Provider.getAuthorizedUserInfo)
         .post('', this.createMatch)
+        .put('/:id', this.editMatch)
 
     }
     async createMatch(req, res, next) {
@@ -31,10 +33,28 @@ export class MatchesController extends BaseController {
         }
     }
 
+    async getById(req, res, next){
+        try {
+            const match = await matchesService.getById(req.params.id)
+            return res.send(match)
+        } catch (error) {
+            next(error)
+        }
+    }
+
     async getProfileMatches(req, res, next) {
         try {
             let matches = await matchesService.getProfileMatches(req.params.profileId)
             res.send(matches)
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async editMatch(req, res, next){
+        try {
+            let match = await matchesService.editMatch(req.params.id, req.body)
+            return res.send(match)
         } catch (error) {
             next(error)
         }
