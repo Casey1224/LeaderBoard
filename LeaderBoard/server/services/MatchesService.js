@@ -2,15 +2,19 @@ import { dbContext } from "../db/DbContext"
 
 
 class MatchesService {
+    async getMatchesByProfileId(profileId) {
+        let matches = await dbContext.Matches.find({ playerIds: profileId }).populate('players game', 'name picture')
+        return matches
+    }
     async getMyMatches(userId) {
         const matches = await dbContext.Matches.find({ playerIds: userId }).populate('players game', 'name picture')
         return matches
     }
 
-    async getById(id){
+    async getById(id) {
         const match = await dbContext.Matches.findById(id)
-        .populate('players', 'name picture')
-        .populate('game', 'name img')
+            .populate('players', 'name picture')
+            .populate('game', 'name img')
         return match
     }
 
@@ -41,7 +45,7 @@ class MatchesService {
         return matches
     }
 
-    async editMatch(id, matchData){
+    async editMatch(id, matchData) {
         const match = await this.getById(id)
         match.playerIds = matchData.playerIds || match.playerIds
         match.winnerId = matchData.winnerId || match.winnerId

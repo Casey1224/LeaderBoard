@@ -1,5 +1,6 @@
 import { profileService } from '../services/ProfileService.js'
 import BaseController from '../utils/BaseController'
+import { matchesService } from '../services/MatchesService'
 
 export class ProfilesController extends BaseController {
   constructor() {
@@ -7,6 +8,7 @@ export class ProfilesController extends BaseController {
     this.router
       .get('', this.getProfiles)
       .get('/:id', this.getProfile)
+      .get('/:profileId/matches', this.getMatchesByProfileId)
   }
 
   async getProfiles(req, res, next) {
@@ -15,6 +17,15 @@ export class ProfilesController extends BaseController {
       res.send(profiles)
     } catch (error) {
       next(error)
+    }
+  }
+  async getMatchesByProfileId(req, res, next) {
+    try {
+      const matches = await matchesService.getMatchesByProfileId(req.params.profileId)
+      return res.send(matches)
+    } catch (error) {
+      next(error)
+
     }
   }
 

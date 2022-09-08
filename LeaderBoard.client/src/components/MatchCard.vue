@@ -1,13 +1,13 @@
 <template>
 
-    <section class="container">
+    <section class="container" v-if="match.game">
         <div class="row d-flex justify-content-center">
             <div class="col-8 ">
                 <div class="card  elevation-2 mx-2">
-                    <h3>{{matches.game.name}}</h3>
-                    <img class="rounded" :src="matches.game.coverImg" alt="">
-                    <div v-for="m in matches" :key="m.id">
-                        {{matches.players.name}}
+                    <h3>{{match.game.name}}</h3>
+                    <img class="rounded" :src="match.game.coverImg" alt="">
+                    <div v-for="p in match.players" :key="p.id">
+                        {{p.name}}
                     </div>
 
                 </div>
@@ -25,22 +25,9 @@ import { logger } from '../utils/Logger';
 import Pop from '../utils/Pop';
 
 export default {
-    props: { matches: { type: Object, required: true } },
+    props: { match: { type: Object, required: true } },
     setup(props) {
-        async function getMyMatches() {
-            try {
-                let match = await matchesService.getMyMatches()
-                logger.log(matches.playerIds)
-                return match
 
-            } catch (error) {
-                Pop.error(error)
-            }
-
-        }
-        onMounted(() => {
-            getMyMatches()
-        })
         return {
 
         }

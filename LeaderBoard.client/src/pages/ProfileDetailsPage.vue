@@ -22,8 +22,10 @@
             </div>
         </div>
     </div>
-    <div v-for="m in matches" :key="m">
-        <MatchCard :matches="m" class="text-center" />
+    <div v-for="m in matches" :key="m.id">
+        <MatchCard :match="m" />
+
+
     </div>
 
 
@@ -69,6 +71,7 @@ export default {
 
         onMounted(() => {
             getProfileById();
+            getProfileMatches()
         })
         return {
             route,
