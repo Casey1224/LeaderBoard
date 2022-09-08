@@ -104,7 +104,6 @@ export default {
 
             async startMatch(){
                 try {
-                    debugger
                     newMatch.value.playerIds.push(this.account.id)
                     logger.log('[new match with account id]', newMatch.value )
                     let match = {
