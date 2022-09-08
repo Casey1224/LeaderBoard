@@ -6,7 +6,7 @@
                 <div class="card  elevation-2 mx-2">
                     <h3>{{matches.game.name}}</h3>
                     <div v-for="m in matches" :key="m.id">
-                        {{matches.players}}
+                        {{matches.players.name}}
                     </div>
 
                 </div>
