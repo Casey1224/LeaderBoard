@@ -4,8 +4,8 @@ import { logger } from "../utils/Logger"
 import { api } from "./AxiosService"
 
 class MatchesService {
-    async createMatch(newMatch, gameId) {
-        const res = await api.post('api/matches', newMatch, gameId)
+    async createMatch(match) {
+        const res = await api.post('api/matches', match)
         AppState.matches.unshift(res.data)
         // return res.data
     }

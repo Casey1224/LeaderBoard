@@ -105,10 +105,23 @@ export default {
             account: computed(() => AppState.account),
             profiles: computed(() => AppState.profiles),
             //SENDS NEW MATCH.VALUE TO THE BACKEND
+            // async startMatch(){
+            //     try {
+            //         // let newMatch = newMatch.value.playerIds
+            //         await matchesService.createMatch(newMatch.value.playerIds, route.params.id)
+            //         logger.log("match created")
+            //     } catch (error) {
+            //         Pop.error('Starting Match',error)
+            //     }
+            // },
             async startMatch(){
                 try {
                     // let newMatch = newMatch.value.playerIds
-                    await matchesService.createMatch(newMatch.value.playerIds, route.params.id)
+                    let match = {
+                        gameId: route.params.gameId,
+                        playerIds: newMatch.value.playerIds
+                    }
+                    await matchesService.createMatch(match)
                     logger.log("match created")
                 } catch (error) {
                     Pop.error('Starting Match',error)
