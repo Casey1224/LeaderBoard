@@ -36,17 +36,17 @@ export default {
       match: computed(() => AppState.activeMatch),
       async editWinner(winnerId, matchId) {
         try { 
-          let editData = {
-            winnerId: winnerId,
-            matchId: matchId
-          }
+          // let editData = {
+          //   winnerId: winnerId,
+          //   matchId: matchId
+          // }
           logger.log("[editData]", editData)
           const yes = await Pop.confirm("Are you sure they won?")
           if(!yes){
             return
           }
-          await matchesService.editMatch(editData)
-          // await matchesService.editMatch(winnerId, matchId)
+          // await matchesService.editMatch(editData)
+          await matchesService.editMatch(winnerId, matchId)
         } catch (error) {
           Pop.error
           logger.error(error)
