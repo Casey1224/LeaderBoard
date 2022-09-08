@@ -7,7 +7,7 @@
                     <h3>{{matches.game.name}}</h3>
                     <img class="" :src="matches.game.coverImg" alt="">
                     <div v-for="m in matches" :key="m.id">
-                        {{matches.players}}
+                        {{matches.players.name}}
                     </div>
 
                 </div>
