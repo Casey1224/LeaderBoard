@@ -1,16 +1,25 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      THIS IS THE MATCH DETAILS PAGE
+      MATCH DETAILS PAGE 
     </div>
   </div>
 </template>
 
 
 <script>
+import { onMounted } from 'vue';
+import { logger } from '../utils/Logger.js';
+
 export default {
   setup() {
-    
+    function refresh(){
+      logger.log('[refreshing page]')
+      location.reload()
+    }
+    onMounted(() => {
+      // refresh();
+    })
     return {
 
     }

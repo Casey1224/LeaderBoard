@@ -73,6 +73,7 @@ import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
 import SearchForm from '../components/SearchForm.vue';
 import MatchProfileCard from '../components/MatchProfileCard.vue';
+// import { hide } from '@popperjs/core/index.js';
 
 
 export default {
@@ -101,9 +102,11 @@ export default {
             game: computed(() => AppState.activeGame),
             account: computed(() => AppState.account),
             profiles: computed(() => AppState.profiles),
+            activeMatch: computed(() => AppState.activeMatch),
 
             async startMatch(){
                 try {
+                    debugger
                     newMatch.value.playerIds.push(this.account.id)
                     logger.log('[new match with account id]', newMatch.value )
                     let match = {
@@ -111,8 +114,10 @@ export default {
                         playerIds: newMatch.value.playerIds
                     }
                     await matchesService.createMatch(match)
-                    logger.log("match created")
-                    // router.push({ name: MatchDetails })
+                    logger.log("[this match id]", AppState.activeMatch.id)
+                    // let modal = document.getElementById("createMatchModal")
+                    // modal.hide()
+                    router.push({ name: 'MatchDetails', params: {matchId: AppState.activeMatch.id} })
                 } catch (error) {
                     Pop.error('Starting Match',error)
                 }

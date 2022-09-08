@@ -1,5 +1,6 @@
 import { AuthPlugin } from "@bcwdev/auth0provider-client"
 import { AppState } from "../AppState"
+// import { router } from "../router.js"
 import { logger } from "../utils/Logger"
 import { api } from "./AxiosService"
 
@@ -7,8 +8,8 @@ class MatchesService {
     async createMatch(match) {
         const res = await api.post('api/matches', match)
         AppState.matches.unshift(res.data)
-        logger.log("[new match created]", res.data)
-        // return res.data
+        AppState.activeMatch = res.data
+        logger.log(res.data)
     }
 
     async getMyMatches() {
