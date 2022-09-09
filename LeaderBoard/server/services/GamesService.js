@@ -6,12 +6,12 @@ class GamesService {
         const game = await dbContext.Games.create(newGame)
         return game
     }
-    async getAll(query ={}) {
+    async getAll(query = {}) {
         // const filter = new RegExp(query, 'ig')
         const games = await dbContext.Games.find(query).sort({ createAt: -1 })
         return games
     }
-  
+
     async getById(id) {
         const game = await dbContext.Games.findById(id)
         if (!game) {
@@ -28,17 +28,12 @@ class GamesService {
         await game.remove()
         return game
     }
-    // async findGames(name = '', offset = 0){
-    //     const filter = new RegExp(name, 'ig')
-    //     return await dbContext.Games
-    //       .aggregate([{
-    //         $match: { name: filter }
-    //       }])
-    //       .collation({ locale: 'en_US', strength: 1 })
-    //       .skip(Number(offset))
-    //       .limit(20)
-    //       .exec()
-    //   }  
+    async findGames(name = '', offset = 0) {
+        let fuzzyName = new RegExp(name, 'ig')
+        const query = { name: { $regex: fuzzyName } }
+        const games = await dbContext.Games.find(query)
+        return games
+    }
     async editGame(id, gameData, userId) {
         let game = await this.getById(id)
         // @ts-ignore
