@@ -4,7 +4,7 @@
       <h1>{{match.game.name}}</h1>
       <h3>Pick a winner!</h3>
       <!-- <img :src="match.game.coverImg" alt="gameImg"> -->
-      <div class="m-3 selectable" @click="editWinner(p.id, match.id)" v-for="p in match.players" :key="p.id">
+      <div class="m-3 selectable" @click="editWinner(p.id)" v-for="p in match.players" :key="p.id">
         <div :match.players="p">
           <p>{{p.name}}</p>
           <img :src="p.picture">
@@ -18,6 +18,7 @@
 <script>
 import { computed } from '@vue/reactivity';
 import { onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import { AppState } from '../AppState.js';
 import { matchesService } from '../services/MatchesService.js';
 import { logger } from '../utils/Logger.js';
@@ -26,6 +27,7 @@ import Pop from '../utils/Pop.js';
 
 export default {
   setup() {
+    const route = useRoute();
     function test() {
       logger.log("[game]", AppState.activeMatch)
     }
@@ -34,19 +36,17 @@ export default {
     });
     return {
       match: computed(() => AppState.activeMatch),
-      async editWinner(winnerId, matchId) {
+      async editWinner(playerId) {
         try { 
-          
-          let editData = {
-            winnerId: winnerId,
-            matchId: matchId
+          let matchId = route.params.matchId
+          let matchEdit = {
+            winnerId: playerId
           }
-          logger.log("[editData]", editData)
           const yes = await Pop.confirm("Are you sure they won?")
           if(!yes){
             return
           }
-          await matchesService.editMatch(editData)
+          await matchesService.editMatch(matchEdit, matchId)
           // await matchesService.editMatch(winnerId, matchId)
         } catch (error) {
           Pop.error
