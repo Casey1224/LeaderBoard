@@ -1,7 +1,6 @@
 <template>
-    <div class="">
         <div class=" d-flex justify-content-center">
-            <div class=" container rounded mt-5 p-3  searchCard text-light py-3">
+            <div class=" container rounded   searchCard text-light py-3">
 
                 <form @submit.prevent="searchProfile" class="">
                     <div class="row d-flex justify-content-around">
@@ -16,7 +15,6 @@
             </div>
 
         </div>
-    </div>
 </template>
 <script>
 import { ref } from 'vue';
@@ -49,10 +47,6 @@ export default {
 </script>
 
 <style>
-.searchCard {
-    background-color: rgb(29, 36, 43);
-}
-
 .searchButton {
     background-color: rgb(183, 249, 249);
 }

@@ -21,7 +21,7 @@
                 </div>
                 <div v-if="game.creatorId == account._id">
                     <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
-                        data-bs-target="#createGameModal">Edit Account</button>
+                        data-bs-target="#createGameModal">Edit Game</button>
                 </div>
             </div>
         </div>
@@ -35,21 +35,26 @@
                     <h5 class="modal-title" id="exampleModalLabel">Create Match</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body pt-0 mt-0">
                     <SearchForm />
                     <div class="row">
                         <div class="col-md-6" @click="selectPlayers(p)" v-for="p in profiles" :key="p.id">
                             <MatchProfileCard :profile="p" />
                         </div>
-                        <div v-for=" p in selectedPlayers" :key="p.id">
-                            <img class="blah rounded-pill  elevation-2 img-fluid" :src="p.picture"
-                                alt="" :title="p.name">
-                                
-                        </div>
-                        <button class="btn btn-outline-secondary" @click="startMatch">
-                            Start Match
-                        </button>
                     </div>
+                    <div class="selected">
+                        <h5>Selected Players</h5>
+                        <div class="row">
+                            <div v-for=" p in selectedPlayers" :key="p.id" class="col-6 d-flex align-items-center p-2">
+                                <img class="blah rounded-pill elevation-2 img-fluid" :src="p.picture" alt=""
+                                    :title="p.name">
+                                <p class="p-3">{{p.name}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-secondary" @click="startMatch">
+                        Start Match
+                    </button>
                 </div>
                 <div class="modal-footer">
                 </div>
@@ -105,10 +110,10 @@ export default {
             profiles: computed(() => AppState.profiles),
             activeMatch: computed(() => AppState.activeMatch),
 
-            async startMatch(){
+            async startMatch() {
                 try {
                     newMatch.value.playerIds.push(this.account.id)
-                    logger.log('[new match with account id]', newMatch.value )
+                    logger.log('[new match with account id]', newMatch.value)
                     let match = {
                         gameId: route.params.gameId,
                         playerIds: newMatch.value.playerIds
@@ -117,24 +122,24 @@ export default {
                     logger.log("[this match id]", AppState.activeMatch.id)
                     // NOTE triggers modal
                     Modal.getOrCreateInstance("#createMatchModal").hide()
-                    router.push({ name: 'MatchDetails', params: {matchId: AppState.activeMatch.id} })
+                    router.push({ name: 'MatchDetails', params: { matchId: AppState.activeMatch.id } })
                 } catch (error) {
-                    Pop.error('Starting Match',error)
+                    Pop.error('Starting Match', error)
                 }
             },
             async selectPlayers(profile) {
                 try {
-                if(newMatch.value.playerIds.includes(profile.id)){
-                return 
-               }
-                newMatch.value.playerIds.push(profile.id)
-                selectedPlayers.value.push(profile)
-                logger.log("[NEW MATCH]", newMatch.value)
-                logger.log("[SELECTED PLAYERS]", selectedPlayers.value)
+                    if (newMatch.value.playerIds.includes(profile.id)) {
+                        return
+                    }
+                    newMatch.value.playerIds.push(profile.id)
+                    selectedPlayers.value.push(profile)
+                    logger.log("[NEW MATCH]", newMatch.value)
+                    logger.log("[SELECTED PLAYERS]", selectedPlayers.value)
                 } catch (error) {
                     Pop.error(error)
                 }
-              
+
                 //TODO Pop confirm to add player
                 //TODO Second page of modal that as the selected player as well as account 
             },
@@ -193,5 +198,9 @@ export default {
 <style lang="scss" scoped>
 .img {
     max-height: 35vh;
+}
+
+.selected {
+    outline: 1px black;
 }
 </style>
