@@ -3,11 +3,11 @@ import { dbContext } from "../db/DbContext"
 
 class MatchesService {
     async getMatchesByProfileId(profileId) {
-        let matches = await dbContext.Matches.find({ playerIds: profileId }).populate('players game', 'name picture')
+        let matches = await dbContext.Matches.find({ playerIds: profileId }).populate('players game', 'coverImg name picture')
         return matches
     }
     async getMyMatches(userId) {
-        const matches = await dbContext.Matches.find({ playerIds: userId }).populate('players game', 'name picture')
+        const matches = await dbContext.Matches.find({ playerIds: userId }).populate('players game', 'coverImg name picture')
         return matches
     }
 

@@ -31,7 +31,7 @@ export class GamesController extends BaseController {
     }
     async getAll(req, res, next) {
         try {
-            const games = await gamesService.getAll(req.query)
+            const games = await gamesService.findGames(req.query.name)
             return res.send(games)
         } catch (error) {
             next(error)

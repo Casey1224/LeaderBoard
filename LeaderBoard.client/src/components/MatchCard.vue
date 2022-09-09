@@ -3,8 +3,8 @@
     <section class="container" v-if="match.game">
         <div class="row d-flex justify-content-center">
             <div class="col-8 ">
-                <div class="card  elevation-2 mx-2">
-                    <h3>{{match.game.name}}</h3>
+                <div class="card my-3 elevation-2 mx-2">
+                    <h3 class="  text-center">{{match.game.name}}</h3>
                     <img class="rounded" :src="match.game.coverImg" alt="">
                     <div v-for="p in match.players" :key="p.id">
                         {{p.name}}
