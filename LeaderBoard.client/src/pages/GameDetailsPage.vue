@@ -45,6 +45,11 @@
                     <div class="selected">
                         <h5>Selected Players</h5>
                         <div class="row">
+                            <div class="col-6 d-flex align-items-center p-2">
+                                <img class="blah rounded-pill elevation-2 img-fluid" :src="account.picture" alt=""
+                                    :title="account.name">
+                                <p class="p-3">{{account.name}}</p>
+                            </div>
                             <div v-for=" p in selectedPlayers" :key="p.id" class="col-6 d-flex align-items-center p-2">
                                 <img class="blah rounded-pill elevation-2 img-fluid" :src="p.picture" alt=""
                                     :title="p.name">

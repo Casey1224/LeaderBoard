@@ -1,7 +1,6 @@
 <template>
         <div class=" d-flex justify-content-center">
             <div class=" container rounded   searchCard text-light py-3">
-
                 <form @submit.prevent="searchProfile" class="">
                     <div class="row d-flex justify-content-around">
                         <!-- <label for="" class="text-dark form-label">Search Profiles</label> -->
