@@ -22,7 +22,11 @@ class MatchesService {
         logger.log('profile matches', res.data)
         AppState.profileMatches = res.data
     }
-
+     async getMatchById(matchId){
+        const res = await api.get(`api/matches/${matchId}`)
+        logger.log('getting match by id', res.data)
+        AppState.activeMatch = res.data
+     }
 
     async editMatch(matchEdit, matchId){
         const res = await api.put(`api/matches/${matchId}`, matchEdit)
@@ -30,8 +34,7 @@ class MatchesService {
         logger.log('edit match', res.data)
         AppState.activeMatch = res.data
         logger.log("[Active Match post res.data]", AppState.activeMatch)
-
-
+        logger.log("all matches", AppState.matches)
     }
 }
 export const matchesService = new MatchesService()

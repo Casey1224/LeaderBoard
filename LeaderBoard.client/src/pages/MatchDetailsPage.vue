@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <h1>{{match.game.name}}</h1>
+      <h1>{{match.game?.name}}</h1>
       <h3>Pick a winner!</h3>
       <!-- <img :src="match.game.coverImg" alt="gameImg"> -->
       <div class="m-3 selectable" @click="editWinner(p.id)" v-for="p in match.players" :key="p.id">
@@ -28,14 +28,20 @@ import Pop from '../utils/Pop.js';
 export default {
   setup() {
     const route = useRoute();
-    function test() {
-      logger.log("[game]", AppState.activeMatch)
-    }
+    async function getMatchById(){
+        try {
+          await matchesService.getMatchById(route.params.matchId)
+        } catch (error) {
+          Pop.error(error)
+          logger.error(error)
+        }
+      }
     onMounted(() => {
-      test()
+      getMatchById()
     });
     return {
       match: computed(() => AppState.activeMatch),
+
       async editWinner(playerId) {
         try { 
           let matchId = route.params.matchId
@@ -47,7 +53,6 @@ export default {
             return
           }
           await matchesService.editMatch(matchEdit, matchId)
-          // await matchesService.editMatch(winnerId, matchId)
         } catch (error) {
           Pop.error
           logger.error(error)
