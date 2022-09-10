@@ -111,7 +111,7 @@ export default {
         }
         onMounted(() => {
             getById();
-            lengthCheck();
+            // lengthCheck();
         });
         return {
             query,
@@ -122,13 +122,13 @@ export default {
             profiles: computed(() => AppState.profiles),
             activeMatch: computed(() => AppState.activeMatch),
 
-            async lengthCheck(){
-                try {
-                    logger.log(newMatch.value.playerIds.length())
-                } catch (error) {
-                    Pop.error(error)
-                }
-            },
+            // async lengthCheck(){
+            //     try {
+            //         logger.log(newMatch.value.playerIds.length())
+            //     } catch (error) {
+            //         Pop.error(error)
+            //     }
+            // },
             async startMatch() {
                 try {
                     newMatch.value.playerIds.push(this.account.id)
