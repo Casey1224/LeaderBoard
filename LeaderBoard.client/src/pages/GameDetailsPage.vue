@@ -60,6 +60,13 @@
                     <button class="btn btn-outline-secondary" @click="startMatch">
                         Start Match
                     </button>
+                    <!-- <button v-if="lengthCheck()" class="btn btn-outline-secondary" disabled @click="startMatch">
+                        Start Match
+                    </button> -->
+                    <!-- <button v-else class="btn btn-outline-secondary" @click="startMatch">
+                        Start Match
+                    </button> -->
+
                 </div>
                 <div class="modal-footer">
                 </div>
@@ -84,7 +91,6 @@ import Pop from '../utils/Pop.js';
 import SearchForm from '../components/SearchForm.vue';
 import MatchProfileCard from '../components/MatchProfileCard.vue';
 import { Modal } from 'bootstrap';
-// import { hide } from '@popperjs/core/index.js';
 
 
 export default {
@@ -105,6 +111,7 @@ export default {
         }
         onMounted(() => {
             getById();
+            lengthCheck();
         });
         return {
             query,
@@ -115,6 +122,13 @@ export default {
             profiles: computed(() => AppState.profiles),
             activeMatch: computed(() => AppState.activeMatch),
 
+            async lengthCheck(){
+                try {
+                    logger.log(newMatch.value.playerIds.length())
+                } catch (error) {
+                    Pop.error(error)
+                }
+            },
             async startMatch() {
                 try {
                     newMatch.value.playerIds.push(this.account.id)
